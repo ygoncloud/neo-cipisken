@@ -1,0 +1,213 @@
+/* Combined CSS from neo-cipisken/src/App.css, Customizer.css, and index.css */
+
+:root {
+  --primary-color: #007bff;
+  --border-radius: 8px;
+  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  --heading-font-weight: 700;
+  --base-font-weight: 400;
+}
+
+body {
+  background-color: #f0f0f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.App {
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: 8px 8px 0px black;
+  margin-bottom: 2rem;
+}
+
+h1, h2 {
+  font-weight: var(--heading-font-weight);
+  letter-spacing: 0.5px;
+  margin-top: 0;
+}
+
+p {
+  font-weight: var(--base-font-weight);
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: white;
+  border: 3px solid black;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px black;
+  transition: all 0.15s ease-out;
+}
+
+.button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px black;
+}
+
+.button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px black;
+}
+
+.file-upload-area {
+  border: 3px dashed black;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  margin-bottom: 1rem;
+}
+
+.feedback-section {
+  margin-top: 2rem;
+}
+
+.feedback-card {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.feedback-card h3 {
+  margin-top: 0;
+  font-weight: var(--heading-font-weight);
+  border-bottom: 3px solid black;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.customize-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: 3px solid black;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px black;
+  transition: all 0.15s ease-out;
+  z-index: 1001;
+}
+
+.customize-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px black;
+}
+
+.customize-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px black;
+}
+
+.customizer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #f9f9f9;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
+.customizer-panel.closed {
+  transform: translateX(100%);
+}
+
+.customizer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #eee;
+  border-bottom: 1px solid #ddd;
+}
+
+.customizer-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.customizer-header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.customizer-content {
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+}
+
+.color-dropdown {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 1rem;
+}
+
+.color-preview-circle {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
