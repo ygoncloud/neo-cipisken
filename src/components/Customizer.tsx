@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface CustomizerProps {
@@ -6,6 +5,7 @@ interface CustomizerProps {
   onClose: () => void;
   styles: {
     primaryColor: string;
+    backgroundColor: string;
     borderRadius: number;
     boxShadowHorizontal: number;
     boxShadowVertical: number;
@@ -37,6 +37,10 @@ const neobrutalismColors = [
   { name: 'White', hex: '#FFFFFF' },
 ];
 
+const getBackgroundColorForPrimary = (primaryColor: string): string => {
+  return primaryColor; // Simply return the primary color
+};
+
 const Customizer: React.FC<CustomizerProps> = ({ isOpen, onClose, styles, onStyleChange }) => {
   if (!isOpen) {
     return null;
@@ -53,7 +57,11 @@ const Customizer: React.FC<CustomizerProps> = ({ isOpen, onClose, styles, onStyl
           <label>Primary Color <span className="color-preview-circle" style={{ backgroundColor: styles.primaryColor }}></span></label>
           <select
             value={styles.primaryColor}
-            onChange={(e) => onStyleChange('primaryColor', e.target.value)}
+            onChange={(e) => {
+              const newPrimaryColor = e.target.value;
+              onStyleChange('primaryColor', newPrimaryColor);
+              onStyleChange('backgroundColor', getBackgroundColorForPrimary(newPrimaryColor));
+            }}
             className="color-dropdown"
           >
             {neobrutalismColors.map((color) => (

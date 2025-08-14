@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Customizer from '../components/Customizer';
 import ReactMarkdown from 'react-markdown';
 
@@ -19,13 +19,18 @@ export default function Home() {
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
-    primaryColor: '#007bff',
+    primaryColor: '#F43F5E', // Rose
+    backgroundColor: '#F43F5E', // Rose
     borderRadius: 8,
     boxShadowHorizontal: 0,
     boxShadowVertical: 4,
     headingFontWeight: 700,
     baseFontWeight: 400,
   });
+
+  useEffect(() => {
+    document.body.style.backgroundColor = customStyles.backgroundColor;
+  }, [customStyles.backgroundColor]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -48,7 +53,7 @@ export default function Home() {
     formData.append('cv', cvFile);
     if (jobDescription.trim()) {
       formData.append('jobDescription', jobDescription);
-    }
+    n}
 
     try {
       const response = await fetch('/api/upload', {
