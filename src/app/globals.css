@@ -11,7 +11,7 @@
 body {
   background-color: #f0f0f0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -210,4 +210,18 @@ p {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.job-description-area {
+  width: 100%;
+  min-height: 150px;
+  border: 3px dashed black;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  text-align: left;
+  background-color: #f0f0f0;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
 }

@@ -1,0 +1,15 @@
+  Core Functionality & User Experience
+   1. Job Description Input: Allow users to paste a job description. The AI could then provide much more specific feedback on how well the
+      CV is tailored to the role.
+   2. Streaming AI Response: Instead of a loading spinner, you could stream the AI's feedback section by section as it's generated. This
+      would feel much faster and more interactive for the user.
+   3. UI/UX Enhancements:
+       * A "Copy Feedback" button for each section.
+       * A "New Analysis" or "Clear" button to easily start over.
+       * Render the feedback as Markdown. This would properly display formatting like bullet points and bold text from the AI, making it
+         easier to read.
+   4. Clearer Error Messages: Instead of a generic "Error uploading file" alert, provide more specific messages (e.g., "Invalid file type,"
+      "Analysis failed," "Server not available").
+   5. Add Tests: Implementing unit or integration tests would make your application more robust and easier to maintain as you add new
+      features.
+  Any of these pique your interest, or do you have other ideas?
