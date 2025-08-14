@@ -95,6 +95,13 @@ export default function Home() {
     setLoading(false);
   };
 
+  const handleClear = () => {
+    setCvFile(null);
+    setJobDescription('');
+    setFeedback(null);
+    setScore(null);
+  };
+
   const onDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
@@ -151,9 +158,17 @@ export default function Home() {
           onChange={(e) => setJobDescription(e.target.value)}
         />
 
-        <button className="button" onClick={handleAnalyzeClick} disabled={!cvFile || loading}>
-          {loading ? 'Analyzing...' : 'Analyze CV'}
-        </button>
+        <div className="button-container">
+          {!feedback ? (
+            <button className="button" onClick={handleAnalyzeClick} disabled={!cvFile || loading}>
+              {loading ? 'Analyzing...' : 'Analyze CV'}
+            </button>
+          ) : (
+            <button className="button" onClick={handleClear}>
+              Start New Analysis
+            </button>
+          )}
+        </div>
       </div>
 
       {score !== null && (

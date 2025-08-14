@@ -225,3 +225,8 @@ code {
   font-family: inherit;
   font-size: inherit;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
