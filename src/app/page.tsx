@@ -38,6 +38,10 @@ export default function Home() {
     }
 
     setLoading(true);
+    setFeedback(null);
+    setScore(null);
+    let accumulatedText = '';
+
     const formData = new FormData();
     formData.append('cv', cvFile);
     if (jobDescription.trim()) {
@@ -50,30 +54,39 @@ export default function Home() {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Server error');
+      if (!response.body) {
+        throw new Error('No response body');
       }
 
-      const data = await response.json();
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
 
-      const scoreMatch = data.feedback.match(/(\d+)\/100/);
-      if (scoreMatch) {
-        setScore(parseInt(scoreMatch[1], 10));
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+        accumulatedText += decoder.decode(value, { stream: true });
+
+        const scoreMatch = accumulatedText.match(/(\d+)\/100/);
+        if (scoreMatch) {
+          setScore(parseInt(scoreMatch[1], 10));
+        }
+
+        const searchabilityMatch = accumulatedText.match(/\*\*Searchability:\*\*\n(.*?)(?=\*\*Hard Skills:\*\*|\*\*Soft Skills:\*\*|\*\*Recruiter Tips:\*\*|\*\*Formatting:\*\*|$)/s);
+        const hardSkillsMatch = accumulatedText.match(/\*\*Hard Skills:\*\*\n(.*?)(?=\*\*Soft Skills:\*\*|\*\*Recruiter Tips:\*\*|\*\*Formatting:\*\*|$)/s);
+        const softSkillsMatch = accumulatedText.match(/\*\*Soft Skills:\*\*\n(.*?)(?=\*\*Recruiter Tips:\*\*|\*\*Formatting:\*\*|$)/s);
+        const recruiterTipsMatch = accumulatedText.match(/\*\*Recruiter Tips:\*\*\n(.*?)(?=\*\*Formatting:\*\*|$)/s);
+        const formattingMatch = accumulatedText.match(/\*\*Formatting:\*\*\n(.*?)$/s);
+
+        setFeedback({
+          searchability: searchabilityMatch ? searchabilityMatch[1].trim() : '',
+          hardSkills: hardSkillsMatch ? hardSkillsMatch[1].trim() : '',
+          softSkills: softSkillsMatch ? softSkillsMatch[1].trim() : '',
+          recruiterTips: recruiterTipsMatch ? recruiterTipsMatch[1].trim() : '',
+          formatting: formattingMatch ? formattingMatch[1].trim() : '',
+        });
       }
-
-      const searchabilityMatch = data.feedback.match(/\*\*Searchability:\*\*\n(.*?)(?=\*\*Hard Skills:\*\*|\*\*Soft Skills:\*\*|\*\*Recruiter Tips:\*\*|\*\*Formatting:\*\*|$)/s);
-      const hardSkillsMatch = data.feedback.match(/\*\*Hard Skills:\*\*\n(.*?)(?=\*\*Soft Skills:\*\*|\*\*Recruiter Tips:\*\*|\*\*Formatting:\*\*|$)/s);
-      const softSkillsMatch = data.feedback.match(/\*\*Soft Skills:\*\*\n(.*?)(?=\*\*Recruiter Tips:\*\*|\*\*Formatting:\*\*|$)/s);
-      const recruiterTipsMatch = data.feedback.match(/\*\*Recruiter Tips:\*\*\n(.*?)(?=\*\*Formatting:\*\*|$)/s);
-      const formattingMatch = data.feedback.match(/\*\*Formatting:\*\*\n(.*?)$/s);
-
-      setFeedback({
-        searchability: searchabilityMatch ? searchabilityMatch[1] : null,
-        hardSkills: hardSkillsMatch ? hardSkillsMatch[1] : null,
-        softSkills: softSkillsMatch ? softSkillsMatch[1] : null,
-        recruiterTips: recruiterTipsMatch ? recruiterTipsMatch[1] : null,
-        formatting: formattingMatch ? formattingMatch[1] : null,
-      });
 
     } catch (error) {
       console.error(error);

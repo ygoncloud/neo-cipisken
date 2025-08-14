@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import pdf from 'pdf-parse';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -17,41 +16,36 @@ export async function POST(req: NextRequest) {
 
   try {
     const buffer = Buffer.from(await cv.arrayBuffer());
-    const data = await pdf(buffer);    const cvText = data.text;        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });    const prompt = `You are an expert in resume optimization and Applicant Tracking Systems (ATS) compliance. You analyze resumes for formatting, keyword optimization, and job description alignment. You must:
+    const data = await pdf(buffer);
+    const cvText = data.text;
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `You are an expert in resume optimization and Applicant Tracking Systems (ATS) compliance. You analyze resumes for formatting, keyword optimization, and job description alignment. You must:\n\nEvaluate the CV against common ATS parsing rules (e.g., no tables, clear headings, chronological consistency).\n\nIdentify missing hard skills, soft skills, and keywords based on the target job description (if provided).\n\nProvide a clear score (0–100) for ATS compatibility.\n\nGive structured, actionable recommendations for improvement, broken down into the following sections. For each section, provide a brief introductory sentence or paragraph before listing the specific issues or tips:\n\n**Searchability:**\nHere are some areas for improvement regarding the searchability of your CV:\n- [List of issues to fix]\n
+**Hard Skills:**\nConsider these points to enhance the hard skills section of your CV:\n- [List of issues to fix]\n
+**Soft Skills:**\nTo strengthen the soft skills presented in your CV, focus on these aspects:\n- [List of issues to fix]\n
+**Recruiter Tips:**\nHere are some tips from a recruiter's perspective to make your CV stand out:\n- [List of tips]\n
+**Formatting:**\nTo improve the overall formatting and ATS compatibility of your CV, address the following:\n- [List of issues to fix]\n
+Maintain a professional, concise, and easy-to-follow tone.\n\nCV Text:\n${cvText}\n\n${jobDescription ? `Job Description:\n${jobDescription}` : ''}`;
 
-Evaluate the CV against common ATS parsing rules (e.g., no tables, clear headings, chronological consistency).
+    const result = await model.generateContentStream(prompt);
 
-Identify missing hard skills, soft skills, and keywords based on the target job description (if provided).
+    const stream = new ReadableStream({
+      async start(controller) {
+        const encoder = new TextEncoder();
+        for await (const chunk of result.stream) {
+          const text = chunk.text();
+          controller.enqueue(encoder.encode(text));
+        }
+        controller.close();
+      },
+    });
 
-Provide a clear score (0–100) for ATS compatibility.
-
-Give structured, actionable recommendations for improvement, broken down into the following sections. For each section, provide a brief introductory sentence or paragraph before listing the specific issues or tips:
-
-**Searchability:**
-Here are some areas for improvement regarding the searchability of your CV:
-- [List of issues to fix]
-
-**Hard Skills:**
-Consider these points to enhance the hard skills section of your CV:
-- [List of issues to fix]
-
-**Soft Skills:**
-To strengthen the soft skills presented in your CV, focus on these aspects:
-- [List of issues to fix]
-
-**Recruiter Tips:**
-Here are some tips from a recruiter's perspective to make your CV stand out:
-- [List of tips]
-
-**Formatting:**
-To improve the overall formatting and ATS compatibility of your CV, address the following:
-- [List of issues to fix]
-
-Maintain a professional, concise, and easy-to-follow tone.
-
-CV Text:
-${cvText}
-
-${jobDescription ? `Job Description:\n${jobDescription}` : ''}`;
-
-    const result = await model.generateContent(prompt);    const response = await result.response;    const feedback = response.text();    return NextResponse.json({ feedback });  } catch (error) {    console.error(error);    return NextResponse.json({ error: 'Error processing PDF' }, { status: 500 });  }}
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Error processing PDF' }, { status: 500 });
+  }
+}
