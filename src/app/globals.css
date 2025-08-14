@@ -259,3 +259,19 @@ code {
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0px black;
 }
+
+/* Markdown specific styles */
+.feedback-card ul,
+.feedback-card ol {
+  padding-left: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.feedback-card li {
+  margin-bottom: 0.5rem;
+}
+
+.feedback-card p:last-child {
+  margin-bottom: 0;
+}

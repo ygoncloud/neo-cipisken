@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import Customizer from '../components/Customizer';
+import ReactMarkdown from 'react-markdown';
 
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -198,7 +199,7 @@ export default function Home() {
                   {copiedSection === 'searchability' ? 'Copied!' : 'Copy'}
                 </button>
               </div>
-              <p>{feedback.searchability}</p>
+              <ReactMarkdown>{feedback.searchability}</ReactMarkdown>
             </div>
           )}
           {feedback.hardSkills && (
@@ -209,7 +210,7 @@ export default function Home() {
                   {copiedSection === 'hardSkills' ? 'Copied!' : 'Copy'}
                 </button>
               </div>
-              <p>{feedback.hardSkills}</p>
+              <ReactMarkdown>{feedback.hardSkills}</ReactMarkdown>
             </div>
           )}
           {feedback.softSkills && (
@@ -220,7 +221,7 @@ export default function Home() {
                   {copiedSection === 'softSkills' ? 'Copied!' : 'Copy'}
                 </button>
               </div>
-              <p>{feedback.softSkills}</p>
+              <ReactMarkdown>{feedback.softSkills}</ReactMarkdown>
             </div>
           )}
           {feedback.recruiterTips && (
@@ -231,7 +232,7 @@ export default function Home() {
                   {copiedSection === 'recruiterTips' ? 'Copied!' : 'Copy'}
                 </button>
               </div>
-              <p>{feedback.recruiterTips}</p>
+              <ReactMarkdown>{feedback.recruiterTips}</ReactMarkdown>
             </div>
           )}
           {feedback.formatting && (
@@ -242,7 +243,7 @@ export default function Home() {
                   {copiedSection === 'formatting' ? 'Copied!' : 'Copy'}
                 </button>
               </div>
-              <p>{feedback.formatting}</p>
+              <ReactMarkdown>{feedback.formatting}</ReactMarkdown>
             </div>
           )}
         </div>
