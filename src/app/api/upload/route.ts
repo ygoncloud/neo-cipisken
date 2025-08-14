@@ -9,6 +9,7 @@ console.log(`API Key Loaded (first 10 chars): ${process.env.GEMINI_API_KEY?.subs
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const cv = formData.get('cv') as File;
+  const jobDescription = formData.get('jobDescription') as string | null;
 
   if (!cv) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -49,6 +50,8 @@ To improve the overall formatting and ATS compatibility of your CV, address the 
 Maintain a professional, concise, and easy-to-follow tone.
 
 CV Text:
-${cvText}`;
+${cvText}
+
+${jobDescription ? `Job Description:\n${jobDescription}` : ''}`;
 
     const result = await model.generateContent(prompt);    const response = await result.response;    const feedback = response.text();    return NextResponse.json({ feedback });  } catch (error) {    console.error(error);    return NextResponse.json({ error: 'Error processing PDF' }, { status: 500 });  }}

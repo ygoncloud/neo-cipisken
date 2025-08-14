@@ -5,6 +5,7 @@ import Customizer from '../components/Customizer';
 
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
+  const [jobDescription, setJobDescription] = useState('');
   const [feedback, setFeedback] = useState<{
     searchability: string | null;
     hardSkills: string | null;
@@ -39,6 +40,9 @@ export default function Home() {
     setLoading(true);
     const formData = new FormData();
     formData.append('cv', cvFile);
+    if (jobDescription.trim()) {
+      formData.append('jobDescription', jobDescription);
+    }
 
     try {
       const response = await fetch('/api/upload', {
@@ -126,6 +130,13 @@ export default function Home() {
         >
           {cvFile ? `Selected File: ${cvFile.name}` : 'Drag & drop your CV here, or click to select a file'}
         </div>
+
+        <textarea
+          className="job-description-area"
+          placeholder="Paste the job description here (optional)"
+          value={jobDescription}
+          onChange={(e) => setJobDescription(e.target.value)}
+        />
 
         <button className="button" onClick={handleAnalyzeClick} disabled={!cvFile || loading}>
           {loading ? 'Analyzing...' : 'Analyze CV'}
