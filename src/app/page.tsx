@@ -16,6 +16,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
     primaryColor: '#007bff',
     borderRadius: 8,
@@ -102,6 +103,15 @@ export default function Home() {
     setScore(null);
   };
 
+  const handleCopy = (text: string, sectionName: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedSection(sectionName);
+      setTimeout(() => {
+        setCopiedSection(null);
+      }, 2000);
+    });
+  };
+
   const onDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
@@ -182,31 +192,56 @@ export default function Home() {
           <h2>Feedback Analysis</h2>
           {feedback.searchability && (
             <div className="feedback-card">
-              <h3>Searchability</h3>
+              <div className="feedback-card-header">
+                <h3>Searchability</h3>
+                <button className="copy-button" onClick={() => handleCopy(feedback.searchability ?? '', 'searchability')}>
+                  {copiedSection === 'searchability' ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
               <p>{feedback.searchability}</p>
             </div>
           )}
           {feedback.hardSkills && (
             <div className="feedback-card">
-              <h3>Hard Skills</h3>
+              <div className="feedback-card-header">
+                <h3>Hard Skills</h3>
+                <button className="copy-button" onClick={() => handleCopy(feedback.hardSkills ?? '', 'hardSkills')}>
+                  {copiedSection === 'hardSkills' ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
               <p>{feedback.hardSkills}</p>
             </div>
           )}
           {feedback.softSkills && (
             <div className="feedback-card">
-              <h3>Soft Skills</h3>
+              <div className="feedback-card-header">
+                <h3>Soft Skills</h3>
+                <button className="copy-button" onClick={() => handleCopy(feedback.softSkills ?? '', 'softSkills')}>
+                  {copiedSection === 'softSkills' ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
               <p>{feedback.softSkills}</p>
             </div>
           )}
           {feedback.recruiterTips && (
             <div className="feedback-card">
-              <h3>Recruiter Tips</h3>
+              <div className="feedback-card-header">
+                <h3>Recruiter Tips</h3>
+                <button className="copy-button" onClick={() => handleCopy(feedback.recruiterTips ?? '', 'recruiterTips')}>
+                  {copiedSection === 'recruiterTips' ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
               <p>{feedback.recruiterTips}</p>
             </div>
           )}
           {feedback.formatting && (
             <div className="feedback-card">
-              <h3>Formatting</h3>
+              <div className="feedback-card-header">
+                <h3>Formatting</h3>
+                <button className="copy-button" onClick={() => handleCopy(feedback.formatting ?? '', 'formatting')}>
+                  {copiedSection === 'formatting' ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
               <p>{feedback.formatting}</p>
             </div>
           )}

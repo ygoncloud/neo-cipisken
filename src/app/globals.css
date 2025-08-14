@@ -96,10 +96,8 @@ p {
 
 .feedback-card h3 {
   margin-top: 0;
+  margin-bottom: 0;
   font-weight: var(--heading-font-weight);
-  border-bottom: 3px solid black;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
 }
 
 .customize-button {
@@ -229,4 +227,35 @@ code {
 .button-container {
   display: flex;
   justify-content: center;
+}
+
+.feedback-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid black;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.copy-button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 2px solid black;
+  border-radius: var(--border-radius);
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.copy-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: 2px 2px 0px black;
+}
+
+.copy-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px black;
 }
