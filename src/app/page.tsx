@@ -18,6 +18,7 @@ export default function Home() {
   const [score, setScore] = useState<number | null>(null);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
     primaryColor: '#F43F5E', // Rose
     backgroundColor: '#F43F5E', // Rose
@@ -34,7 +35,14 @@ export default function Home() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setCvFile(event.target.files[0]);
+      const file = event.target.files[0];
+      if (file.type !== 'application/pdf') {
+        setError('Invalid file type. Please upload a PDF file.');
+        setCvFile(null);
+      } else {
+        setCvFile(file);
+        setError(null);
+      }
     }
   };
 
@@ -121,7 +129,14 @@ export default function Home() {
   const onDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
-      setCvFile(event.dataTransfer.files[0]);
+      const file = event.dataTransfer.files[0];
+      if (file.type !== 'application/pdf') {
+        setError('Invalid file type. Please upload a PDF file.');
+        setCvFile(null);
+      } else {
+        setCvFile(file);
+        setError(null);
+      }
     }
   }, []);
 
@@ -166,6 +181,8 @@ export default function Home() {
         >
           {cvFile ? `Selected File: ${cvFile.name}` : 'Drag & drop your CV here, or click to select a file'}
         </div>
+
+        {error && <p className="error-message">{error}</p>}
 
         <textarea
           className="job-description-area"

@@ -14,6 +14,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
+  if (cv.type !== 'application/pdf') {
+    return NextResponse.json({ error: 'Invalid file type. Please upload a PDF file.' }, { status: 400 });
+  }
+
   try {
     const buffer = Buffer.from(await cv.arrayBuffer());
     const data = await pdf(buffer);
