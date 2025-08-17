@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AI CV Feedback',
+  title: 'Cipisken: AI CV Analyzer',
   description: 'Get instant AI feedback on your CV',
 };
 
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} pattern-background`}>{children}</body>
     </html>
   );
 }

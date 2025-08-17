@@ -20,18 +20,44 @@ export default function Home() {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
-    primaryColor: '#F43F5E', // Rose
-    backgroundColor: '#F43F5E', // Rose
+    primaryColor: 'oklch(73.43% 0.2332 321.41)', // Red
+    backgroundColor: 'oklch(94.79% 0.0407 320.6)', // Red
     borderRadius: 8,
-    boxShadowHorizontal: 0,
+    boxShadowHorizontal: 4,
     boxShadowVertical: 4,
     headingFontWeight: 700,
     baseFontWeight: 400,
   });
 
+  const backgroundColorMap: { [key: string]: string } = {
+    'oklch(67.28% 0.2147 24.22)': 'oklch(93.3% 0.0339 17.77)', // Red
+    'oklch(72.27% 0.1894 50.19)': 'oklch(95.38% 0.0357 72.89)', // Orange
+    'oklch(84.08% 0.1725 84.2)': 'oklch(96.22% 0.0569 95.61)', // Amber
+    'oklch(86.03% 0.176 92.36)': 'oklch(96.79% 0.0654 102.26)', // Yellow
+    'oklch(83.29% 0.2331 132.51)': 'oklch(95.37% 0.0549 125.19)', // Lime
+    'oklch(79.76% 0.2044 153.08)': 'oklch(96.47% 0.0401 157.79)', // Green
+    'oklch(77.54% 0.1681 162.78)': 'oklch(95.31% 0.0496 169.04)', // Emerald
+    'oklch(78.57% 0.1422 180.36)':'oklch(95.08% 0.0481 184.07)', // Teal
+    'oklch(76.89% 0.139164 219.13)':'oklch(94.61% 0.043 211.12)', // Cyan
+    'oklch(66.9% 0.18368 248.8066)':'oklch(94.27% 0.0268 242.57)', // Sky
+    'oklch(67.47% 0.1726 259.49)':'oklch(93.46% 0.0305 255.11)', // Blue
+    'oklch(66.34% 0.1806 277.2)':'oklch(92.13% 0.0388 282.36)', // Indigo
+    'oklch(70.28% 0.1753 295.36)':'oklch(93.88% 0.033 300.19)', // Violet
+    'oklch(71.9% 0.198 310.03)':'oklch(94.11% 0.036556 308.0303)', // Purple
+    'oklch(73.43% 0.2332 321.41)':'oklch(94.79% 0.0407 320.6)', // Fuchsia
+    'oklch(71.5% 0.197 354.23)':'oklch(95.16% 0.0242 343.23)', // Pink
+    'oklch(70.79% 0.1862 16.25)':'oklch(93.37% 0.0339 12.05)', // Rose
+    // Add other primary color to background color mappings here
+  };
+
   useEffect(() => {
-    document.body.style.backgroundColor = customStyles.backgroundColor;
-  }, [customStyles.backgroundColor]);
+    const newBackgroundColor = backgroundColorMap[customStyles.primaryColor] || 'oklch(94.79% 0.0407 320.6)'; // Default color
+    document.body.style.backgroundColor = newBackgroundColor;
+  }, [customStyles.primaryColor]);
+
+  
+
+  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -162,7 +188,7 @@ export default function Home() {
   return (
     <div className="App" style={appStyle}>
       <div className="container">
-        <h1>AI CV Feedback</h1>
+        <h1>Cipisken CV Analyzer</h1>
         <p>Upload your CV to get instant feedback from our AI assistant.</p>
         
         <input 
