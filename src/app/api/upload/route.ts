@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(await cv.arrayBuffer());
     const data = await pdf(buffer);
     const cvText = data.text;
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const prompt = `You are an expert in resume optimization and Applicant Tracking Systems (ATS) compliance. You analyze resumes for formatting, keyword optimization, and job description alignment. You must:\n\nEvaluate the CV against common ATS parsing rules (e.g., no tables, clear headings, chronological consistency).\n\nIdentify missing hard skills, soft skills, and keywords based on the target job description (if provided).\n\nProvide a clear score (0–100) for ATS compatibility.\n\nGive structured, actionable recommendations for improvement, broken down into the following sections. For each section, provide a brief introductory sentence or paragraph before listing the specific issues or tips:\n\n**Searchability:**\nHere are some areas for improvement regarding the searchability of your CV:\n- [List of issues to fix]\n
 **Hard Skills:**\nConsider these points to enhance the hard skills section of your CV:\n- [List of issues to fix]\n
 **Soft Skills:**\nTo strengthen the soft skills presented in your CV, focus on these aspects:\n- [List of issues to fix]\n

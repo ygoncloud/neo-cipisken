@@ -188,7 +188,7 @@ export default function Home() {
   return (
     <div className="App" style={appStyle}>
       <div className="container">
-        <h1>Cipisken CV Analyzer</h1>
+        <h1>Cipisken AI CV Analyzer</h1>
         <p>Upload your CV to get instant feedback from our AI assistant.</p>
         
         <input 
