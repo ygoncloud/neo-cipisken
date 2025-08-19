@@ -95,6 +95,11 @@ export default function Home() {
         body: formData,
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'An unknown error occurred.');
+      }
+
       if (!response.body) {
         throw new Error('No response body');
       }
@@ -129,9 +134,9 @@ export default function Home() {
         });
       }
 
-    } catch (error) {
-      console.error(error);
-      alert('Error uploading file or getting feedback.');
+    } catch (error: any) {
+      console.error('Error caught:', error);
+      setError(error.message || 'Error uploading file or getting feedback.');
     }
     setLoading(false);
   };
