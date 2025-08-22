@@ -1,0 +1,27 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/upload",
+      "destination": "/api/upload"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/upload",
+      "headers": [
+        {
+          "key": "x-ratelimit-limit",
+          "value": "10"
+        },
+        {
+          "key": "x-ratelimit-remaining",
+          "value": "1"
+        },
+        {
+          "key": "x-ratelimit-reset",
+          "value": "60"
+        }
+      ]
+    }
+  ]
+}
