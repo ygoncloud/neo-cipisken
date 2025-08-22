@@ -20,8 +20,8 @@ export default function Home() {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
-    primaryColor: 'oklch(73.43% 0.2332 321.41)', // Red
-    backgroundColor: 'oklch(94.79% 0.0407 320.6)', // Red
+    primaryColor: 'oklch(72.27% 0.1894 50.19)', // Orange
+    backgroundColor: 'oklch(95.38% 0.0357 72.89)', // Orange
     borderRadius: 8,
     boxShadowHorizontal: 4,
     boxShadowVertical: 4,
@@ -193,6 +193,7 @@ export default function Home() {
   return (
     <div className="App" style={appStyle}>
       <div className="container">
+        <div className="card-corner-image"></div>
         <h1>Cipisken AI CV Analyzer</h1>
         <p>Upload your CV to get instant feedback from our AI assistant.</p>
         

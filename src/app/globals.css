@@ -42,6 +42,20 @@ body {
   padding: 2rem;
   box-shadow: 8px 8px 0px black;
   margin-bottom: 2rem;
+  position: relative;
+}
+
+.card-corner-image {
+  position: absolute;
+  top: -20px; /* Adjust as needed */
+  right: -20px; /* Adjust as needed */
+  width: 100px; /* Size of the image */
+  height: 100px; /* Size of the image */
+  background-color: var(--primary-color); /* Placeholder color */
+  border: 3px solid black;
+  border-radius: var(--border-radius);
+  transform: rotate(15deg); /* Peeking effect */
+  z-index: -1; /* Behind the card */
 }
 
 h1, h2 {
@@ -85,6 +99,12 @@ p {
   cursor: pointer;
   background-color: #f0f0f0;
   margin-bottom: 1rem;
+  transition: border-color 0.3s ease, border-width 0.3s ease;
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  border-width: 4px;
 }
 
 .feedback-section {
