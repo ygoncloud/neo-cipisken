@@ -49,14 +49,31 @@ body {
   position: absolute;
   top: -20px; /* Adjust as needed */
   right: -20px; /* Adjust as needed */
-  width: 100px; /* Size of the image */
-  height: 100px; /* Size of the image */
-  background-color: var(--primary-color); /* Placeholder color */
-  border: 3px solid black;
+  width: 150px; /* Bigger size */
+  height: 150px; /* Bigger size */
+  background-image: url('/anya.jpeg'); /* Your image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 3px solid var(--primary-color); /* Follow primary color */
   border-radius: var(--border-radius);
   transform: rotate(15deg); /* Peeking effect */
-  z-index: -1; /* Behind the card */
+  z-index: 1; /* Above the card */
 }
+
+.card-standout-object {
+  position: absolute;
+  bottom: -40px; /* Position outside the card */
+  left: -40px; /* Position outside the card */
+  width: 120px; /* Larger size */
+  height: 120px; /* Larger size */
+  background-color: var(--primary-color); /* Placeholder color */
+  border: 3px solid black;
+  border-radius: 50%; /* Circular shape */
+  z-index: 1; /* Above the card */
+}
+
+
 
 h1, h2 {
   font-weight: var(--heading-font-weight);
