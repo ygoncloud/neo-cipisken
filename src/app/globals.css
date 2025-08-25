@@ -45,20 +45,40 @@ body {
   position: relative;
 }
 
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
 .card-corner-image {
   position: absolute;
-  top: -20px; /* Adjust as needed */
-  right: -20px; /* Adjust as needed */
-  width: 150px; /* Bigger size */
-  height: 150px; /* Bigger size */
-  background-image: url('/anya.jpeg'); /* Your image */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 3px solid var(--primary-color); /* Follow primary color */
+  top: -40px;
+  right: 0px;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  transition: clip-path 0.5s ease-in-out;
+  clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+  animation: bounce 2s infinite;
+  animation-delay: 1s;
+  border: 3px solid var(--primary-color);
   border-radius: var(--border-radius);
-  transform: rotate(15deg); /* Peeking effect */
-  z-index: 1; /* Above the card */
+}
+
+.card-corner-image.visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  animation: none;
+}
+
+.card-corner-image .anya-image {
+  border-radius: var(--border-radius);
 }
 
 .card-standout-object {

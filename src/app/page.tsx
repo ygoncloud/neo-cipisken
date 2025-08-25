@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Customizer from '../components/Customizer';
 import ReactMarkdown from 'react-markdown';
+import Image from 'next/image';
 
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -17,6 +18,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  const [isAnyaVisible, setIsAnyaVisible] = useState(false);
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
@@ -87,7 +89,7 @@ export default function Home() {
     formData.append('cv', cvFile);
     if (jobDescription.trim()) {
       formData.append('jobDescription', jobDescription);
-    n}
+    }
 
     try {
       const response = await fetch('/api/upload', {
@@ -193,7 +195,18 @@ export default function Home() {
   return (
     <div className="App" style={appStyle}>
       <div className="container">
-        <div className="card-corner-image"></div>
+        <div
+          className={`card-corner-image ${isAnyaVisible ? 'visible' : ''}`}
+          onClick={() => setIsAnyaVisible(!isAnyaVisible)}
+        >
+          <Image
+            src="/anya.jpeg"
+            alt="Anya"
+            width={150}
+            height={150}
+            className="anya-image"
+          />
+        </div>
         <div className="card-standout-object"></div>
         
         <h1>Cipisken AI CV Analyzer</h1>
@@ -312,9 +325,9 @@ export default function Home() {
         {isCustomizerOpen ? 'Close Customizer' : 'Open Customizer'}
       </button>
 
-      <Customizer 
-        isOpen={isCustomizerOpen} 
-        onClose={() => setIsCustomizerOpen(false)} 
+      <Customizer
+        isOpen={isCustomizerOpen}
+        onClose={() => setIsCustomizerOpen(false)}
         styles={customStyles}
         onStyleChange={handleStyleChange}
       />
