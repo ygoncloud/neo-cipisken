@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import sanitizeFilename from 'sanitize-filename';
 import pdf from 'pdf-parse';
@@ -55,26 +54,36 @@ export async function POST(req: NextRequest) {
     }
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = `You are an expert in resume optimization and Applicant Tracking Systems (ATS) compliance. You analyze resumes for formatting, keyword optimization, and job description alignment. You must:\n\nEvaluate the CV against common ATS parsing rules (e.g., no tables, clear headings, chronological consistency).\n\nIdentify missing hard skills, soft skills, and keywords based on the target job description (if provided).\n\nProvide a clear score (0–100) for ATS compatibility.\n\nGive structured, actionable recommendations for improvement, broken down into the following sections. For each section, provide a brief introductory sentence or paragraph before listing the specific issues or tips:\n\n**Searchability:**\nHere are some areas for improvement regarding the searchability of your CV:\n- [List of issues to fix]\n\n**Hard Skills:**\nConsider these points to enhance the hard skills section of your CV:\n- [List of issues to fix]\n\n**Soft Skills:**\nTo strengthen the soft skills presented in your CV, focus on these aspects:\n- [List of issues to fix]\n\n**Recruiter Tips:**\nHere are some tips from a recruiter's perspective to make your CV stand out:\n- [List of tips]\n\n**Formatting:**\nTo improve the overall formatting and ATS compatibility of your CV, address the following:\n- [List of issues to fix]\n\nMaintain a professional, concise, and easy-to-follow tone.\n\nCV Text:\n${parsedCvText.data}\n\n${parsedJobDescription.data ? `Job Description:\n${parsedJobDescription.data}` : ''}`;
+    const prompt = `You are an expert in resume optimization and Applicant Tracking Systems (ATS) compliance. You analyze resumes for formatting, keyword optimization, and job description alignment. You must return a JSON object with the following structure:
 
-    const result = await model.generateContentStream(prompt);
+{
+  "score": <a number between 0 and 100>,
+  "feedback": {
+    "searchability": "<string>",
+    "hardSkills": "<string>",
+    "softSkills": "<string>",
+    "recruiterTips": "<string>",
+    "formatting": "<string>"
+  }
+}
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        const encoder = new TextEncoder();
-        for await (const chunk of result.stream) {
-          const text = chunk.text();
-          controller.enqueue(encoder.encode(text));
-        }
-        controller.close();
-      },
-    });
+CV Text:\n${parsedCvText.data}\n\n${parsedJobDescription.data ? `Job Description:\n${parsedJobDescription.data}` : ''}`;
 
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-      },
-    });
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    // Clean the text to ensure it is a valid JSON
+    const cleanedText = text.replace(/\`\`\`json\n|\`\`\`/g, '').trim();
+
+    try {
+      const jsonResponse = JSON.parse(cleanedText);
+      return NextResponse.json(jsonResponse);
+    } catch (e) {
+      console.error("Failed to parse JSON response:", cleanedText);
+      return NextResponse.json({ error: "Failed to parse AI response." }, { status: 500 });
+    }
+
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Error processing PDF' }, { status: 500 });

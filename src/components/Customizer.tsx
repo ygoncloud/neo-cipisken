@@ -3,15 +3,12 @@ import React from 'react';
 interface CustomizerProps {
   isOpen: boolean;
   onClose: () => void;
-  styles: {
-    primaryColor: string;
-    backgroundColor: string;
-    borderRadius: number;
-    boxShadowHorizontal: number;
-    boxShadowVertical: number;
-    headingFontWeight: number;
-    baseFontWeight: number;
-  };
+  primaryColor: string;
+  borderRadius: number;
+  boxShadowHorizontal: number;
+  boxShadowVertical: number;
+  headingFontWeight: number;
+  baseFontWeight: number;
   onStyleChange: (styleName: string, value: any) => void;
 }
 
@@ -39,7 +36,17 @@ const getBackgroundColorForPrimary = (primaryColor: string): string => {
   return primaryColor; // Simply return the primary color
 };
 
-const Customizer: React.FC<CustomizerProps> = ({ isOpen, onClose, styles, onStyleChange }) => {
+const Customizer: React.FC<CustomizerProps> = ({ 
+  isOpen, 
+  onClose, 
+  primaryColor,
+  borderRadius,
+  boxShadowHorizontal,
+  boxShadowVertical,
+  headingFontWeight,
+  baseFontWeight,
+  onStyleChange 
+}) => {
   if (!isOpen) {
     return null;
   }
@@ -52,9 +59,9 @@ const Customizer: React.FC<CustomizerProps> = ({ isOpen, onClose, styles, onStyl
       </div>
       <div className="customizer-content">
         <div className="control-group">
-          <label>Primary Color <span className="color-preview-circle" style={{ backgroundColor: styles.primaryColor }}></span></label>
+          <label>Primary Color <span className="color-preview-circle" style={{ backgroundColor: primaryColor }}></span></label>
           <select
-            value={styles.primaryColor}
+            value={primaryColor}
             onChange={(e) => {
               const newPrimaryColor = e.target.value;
               onStyleChange('primaryColor', newPrimaryColor);
@@ -70,54 +77,54 @@ const Customizer: React.FC<CustomizerProps> = ({ isOpen, onClose, styles, onStyl
           </select>
         </div>
         <div className="control-group">
-          <label>Border Radius: {styles.borderRadius}px</label>
+          <label>Border Radius: {borderRadius}px</label>
           <input 
             type="range" 
             min="0" 
             max="20" 
-            value={styles.borderRadius}
+            value={borderRadius}
             onChange={(e) => onStyleChange('borderRadius', parseInt(e.target.value))}
           />
         </div>
         <div className="control-group">
-          <label>Horizontal Box Shadow: {styles.boxShadowHorizontal}px</label>
+          <label>Horizontal Box Shadow: {boxShadowHorizontal}px</label>
           <input 
             type="range" 
             min="-20" 
             max="20" 
-            value={styles.boxShadowHorizontal}
+            value={boxShadowHorizontal}
             onChange={(e) => onStyleChange('boxShadowHorizontal', parseInt(e.target.value))}
           />
         </div>
         <div className="control-group">
-          <label>Vertical Box Shadow: {styles.boxShadowVertical}px</label>
+          <label>Vertical Box Shadow: {boxShadowVertical}px</label>
           <input 
             type="range" 
             min="-20" 
             max="20" 
-            value={styles.boxShadowVertical}
+            value={boxShadowVertical}
             onChange={(e) => onStyleChange('boxShadowVertical', parseInt(e.target.value))}
           />
         </div>
         <div className="control-group">
-          <label>Heading Font Weight: {styles.headingFontWeight}</label>
+          <label>Heading Font Weight: {headingFontWeight}</label>
           <input 
             type="range" 
             min="300" 
             max="900" 
             step="100"
-            value={styles.headingFontWeight}
+            value={headingFontWeight}
             onChange={(e) => onStyleChange('headingFontWeight', parseInt(e.target.value))}
           />
         </div>
         <div className="control-group">
-          <label>Base Font Weight: {styles.baseFontWeight}</label>
+          <label>Base Font Weight: {baseFontWeight}</label>
           <input 
             type="range" 
             min="300" 
             max="700" 
             step="100"
-            value={styles.baseFontWeight}
+            value={baseFontWeight}
             onChange={(e) => onStyleChange('baseFontWeight', parseInt(e.target.value))}
           />
         </div>
@@ -126,4 +133,4 @@ const Customizer: React.FC<CustomizerProps> = ({ isOpen, onClose, styles, onStyl
   );
 };
 
-export default Customizer;
+export default React.memo(Customizer);
