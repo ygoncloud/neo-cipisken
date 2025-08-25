@@ -20,6 +20,13 @@ export default function Home() {
     softSkills: string | null;
     recruiterTips: string | null;
     formatting: string | null;
+    categoryScores?: {
+      searchability: number | null;
+      hardSkills: number | null;
+      softSkills: number | null;
+      recruiterTips: number | null;
+      formatting: number | null;
+    };
   } | null>(null);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
@@ -85,7 +92,10 @@ export default function Home() {
       }
 
       setScore(data.score);
-      setFeedback(data.feedback);
+      setFeedback({
+        ...data.feedback,
+        categoryScores: data.categoryScores
+      });
 
     } catch (error: any) {
       console.error('Error caught:', error);
@@ -181,7 +191,7 @@ export default function Home() {
         />
       </div>
 
-      <Score score={score} />
+      <Score categoryScores={feedback?.categoryScores} />
 
       <Feedback 
         feedback={feedback} 

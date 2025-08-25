@@ -64,6 +64,13 @@ export async function POST(req: NextRequest) {
     "softSkills": "<string>",
     "recruiterTips": "<string>",
     "formatting": "<string>"
+  },
+  "categoryScores": {
+    "searchability": <a number between 0 and 100>,
+    "hardSkills": <a number between 0 and 100>,
+    "softSkills": <a number between 0 and 100>,
+    "recruiterTips": <a number between 0 and 100>,
+    "formatting": <a number between 0 and 100>
   }
 }
 
