@@ -45,12 +45,12 @@ export async function POST(req: NextRequest) {
     // Validate cvText and jobDescription using Zod
     const parsedCvText = cvTextSchema.safeParse(cvText);
     if (!parsedCvText.success) {
-      return NextResponse.json({ error: `Invalid CV text: ${parsedCvText.error.errors[0].message}` }, { status: 400 });
+      return NextResponse.json({ error: `Invalid CV text: ${parsedCvText.error.issues[0].message}` }, { status: 400 });
     }
 
     const parsedJobDescription = jobDescriptionSchema.safeParse(jobDescription);
     if (!parsedJobDescription.success) {
-      return NextResponse.json({ error: `Invalid job description: ${parsedJobDescription.error.errors[0].message}` }, { status: 400 });
+      return NextResponse.json({ error: `Invalid job description: ${parsedJobDescription.error.issues[0].message}` }, { status: 400 });
     }
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
