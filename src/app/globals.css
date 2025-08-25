@@ -50,23 +50,23 @@ body {
     transform: translateY(0);
   }
   40% {
-    transform: translateY(-10px);
+    transform: translateY(10px);
   }
   60% {
-    transform: translateY(-5px);
+    transform: translateY(5px);
   }
 }
 
 .card-corner-image {
   position: absolute;
-  top: -40px;
+  top: -50px;
   right: 0px;
   width: 150px;
   height: 150px;
   cursor: pointer;
   transition: clip-path 0.5s ease-in-out;
   clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
-  animation: bounce 2s infinite;
+  animation: bounce 2s ease;
   animation-delay: 1s;
   border: 3px solid var(--primary-color);
   border-radius: var(--border-radius);
