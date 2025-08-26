@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 interface ScoreProps {
   categoryScores: {
@@ -28,7 +29,7 @@ const Score: React.FC<ScoreProps> = ({ categoryScores }) => {
   return (
     <div className="container score-section">
       <div className="score-cards-container">
-        {categories.map((category) => {
+        {categories.map((category, index) => {
           const score = categoryScores[category.key as keyof typeof categoryScores];
           const percentage = score !== null ? score : 0;
           const radius = 50;
@@ -59,7 +60,7 @@ const Score: React.FC<ScoreProps> = ({ categoryScores }) => {
               <p className="score-category-name">{category.name}</p>
             </div>
           );
-        })}
+        })}        
       </div>
     </div>
   );

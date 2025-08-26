@@ -31,7 +31,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
-  const [isAnyaVisible, setIsAnyaVisible] = useState(false);
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
@@ -154,8 +153,7 @@ export default function Home() {
     <div className="App" style={appStyle}>
       <div className="container">
         <div
-          className={`card-corner-image ${isAnyaVisible ? 'visible' : ''}`}
-          onClick={() => setIsAnyaVisible(!isAnyaVisible)}
+          className="card-corner-image"
         >
           <Image
             src="/anya.jpeg"
@@ -165,7 +163,6 @@ export default function Home() {
             className="anya-image"
           />
         </div>
-        <div className="card-standout-object"></div>
         
         <h1>Cipisken AI CV Analyzer</h1>
         <p>Upload your CV to get instant feedback from our AI assistant.</p>
@@ -189,7 +186,8 @@ export default function Home() {
           cvFile={cvFile} 
           loading={loading} 
         />
-      </div>
+
+        </div>
 
       <Score categoryScores={feedback?.categoryScores} />
 
