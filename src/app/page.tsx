@@ -151,6 +151,18 @@ export default function Home() {
 
   return (
     <div className="App" style={appStyle}>
+      <header className="main-header">
+        <div className="website-logo-container">
+          <Image
+            src="/logo.jpeg"
+            alt="Website Logo"
+            width={80}
+            height={80}
+            className="website-logo"
+          />
+        </div>
+        <h1>Cipisken AI CV Analyzer</h1>
+      </header>
       <div className="container">
         <div
           className="card-corner-image"
@@ -164,7 +176,6 @@ export default function Home() {
           />
         </div>
         
-        <h1>Cipisken AI CV Analyzer</h1>
         <p>Upload your CV to get instant feedback from our AI assistant.</p>
         
         <FileUpload 

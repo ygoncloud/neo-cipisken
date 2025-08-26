@@ -392,3 +392,29 @@ code {
   font-size: 1rem;
   color: black;
 }
+.main-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: var(--border-radius);
+  box-shadow: 8px 8px 0px black;
+  margin-bottom: 2rem;
+}
+
+.website-logo-container {
+  z-index: 10;
+}
+
+.website-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.main-header h1 {
+  margin-left: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
