@@ -208,12 +208,22 @@ export default function Home() {
         handleCopy={handleCopy} 
       />
 
-      <button
-        className="customize-button"
-        onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
-      >
-        {isCustomizerOpen ? 'Close Customizer' : 'Open Customizer'}
-      </button>
+      <div className="customizer-container">
+        <Image
+          src={isCustomizerOpen ? "/logo.jpeg" : "/button.jpeg"}
+          alt="Customizer"
+          width={100}
+          height={100}
+          className="customizer-image"
+          onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
+        />
+        <button
+          className="customize-button"
+          onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
+        >
+          {isCustomizerOpen ? 'Close' : 'Customize'}
+        </button>
+      </div>
 
       <Customizer
         isOpen={isCustomizerOpen}
