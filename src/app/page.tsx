@@ -149,6 +149,16 @@ export default function Home() {
     '--base-font-weight': customStyles.baseFontWeight,
   } as React.CSSProperties;
 
+  const images = ["/anya.jpeg", "/logo.jpeg", "/button.jpeg"];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <div className="App" style={appStyle}>
       <header className="main-header">
@@ -168,7 +178,7 @@ export default function Home() {
           className="card-corner-image"
         >
           <Image
-            src="/anya.jpeg"
+            src={images[currentImageIndex]}
             alt="Anya"
             width={150}
             height={150}
