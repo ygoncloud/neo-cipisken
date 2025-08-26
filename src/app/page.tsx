@@ -141,6 +141,10 @@ export default function Home() {
     }));
   };
 
+  const handleResetStyles = () => {
+    setCustomStyles(DEFAULT_STYLES);
+  };
+
   const appStyle = {
     '--primary-color': customStyles.primaryColor,
     '--border-radius': `${customStyles.borderRadius}px`,
@@ -227,12 +231,14 @@ export default function Home() {
           className="customizer-image"
           onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
         />
-        <button
-          className="customize-button"
-          onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
-        >
-          {isCustomizerOpen ? 'Close' : 'Customize'}
-        </button>
+        {isCustomizerOpen && (
+          <button
+            className="customize-button"
+            onClick={handleResetStyles}
+          >
+            Reset
+          </button>
+        )}
       </div>
 
       <Customizer
@@ -249,3 +255,13 @@ export default function Home() {
     </div>
   );
 }
+
+const DEFAULT_STYLES = {
+  primaryColor: 'oklch(72.27% 0.1894 50.19)', // Orange
+  backgroundColor: 'oklch(95.38% 0.0357 72.89)', // Orange
+  borderRadius: 8,
+  boxShadowHorizontal: 4,
+  boxShadowVertical: 4,
+  headingFontWeight: 700,
+  baseFontWeight: 400,
+};
