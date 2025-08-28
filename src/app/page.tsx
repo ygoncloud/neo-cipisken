@@ -183,10 +183,11 @@ export default function Home() {
         >
           <Image
             src={images[currentImageIndex]}
-            alt="Anya"
+            alt="Decorative image"
             width={150}
             height={150}
             className="anya-image"
+            priority={currentImageIndex === 0}
           />
         </div>
         
@@ -224,7 +225,7 @@ export default function Home() {
 
       <div className="customizer-container">
         <Image
-          src={isCustomizerOpen ? "/logo.jpeg" : "/button.jpeg"}
+          src={isCustomizerOpen ? "/logo.jpeg" : "/customizer-button.jpeg"}
           alt="Customizer"
           width={100}
           height={100}
