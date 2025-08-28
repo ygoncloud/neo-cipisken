@@ -168,7 +168,7 @@ export default function Home() {
       <header className="main-header">
         <div className="website-logo-container">
           <Image
-            src="/logo.jpeg"
+            src="/logo.jpg"
             alt="Website Logo"
             width={80}
             height={80}
