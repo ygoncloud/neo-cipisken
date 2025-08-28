@@ -153,15 +153,33 @@ export default function Home() {
     '--base-font-weight': customStyles.baseFontWeight,
   } as React.CSSProperties;
 
-  const images = ["/anya.jpeg", "/logo.jpeg", "/button.jpeg"];
+  const [carouselImages, setCarouselImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
-    return () => clearInterval(interval);
-  }, [images.length]);
+    const fetchCarouselImages = async () => {
+      try {
+        const response = await fetch('/api/carousel');
+        const data = await response.json();
+        if (data.images) {
+          setCarouselImages(data.images);
+        }
+      } catch (error) {
+        console.error('Failed to fetch carousel images:', error);
+      }
+    };
+
+    fetchCarouselImages();
+  }, []);
+
+  useEffect(() => {
+    if (carouselImages.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+      }, 3000); // Change image every 3 seconds
+      return () => clearInterval(interval);
+    }
+  }, [carouselImages.length]);
 
   return (
     <div className="App" style={appStyle}>
@@ -181,14 +199,16 @@ export default function Home() {
         <div
           className="card-corner-image"
         >
-          <Image
-            src={images[currentImageIndex]}
-            alt="Decorative image"
-            width={150}
-            height={150}
-            className="anya-image"
-            priority={currentImageIndex === 0}
-          />
+          {carouselImages.length > 0 && (
+            <Image
+              src={carouselImages[currentImageIndex]}
+              alt="Decorative image"
+              width={150}
+              height={150}
+              className="anya-image"
+              priority={currentImageIndex === 0}
+            />
+          )}
         </div>
         
         <p>Upload your CV to get instant feedback from our AI assistant.</p>
