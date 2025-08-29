@@ -246,7 +246,7 @@ export default function Home() {
 
         </div>
 
-      <Score categoryScores={feedback?.categoryScores} />
+      <Score categoryScores={feedback?.categoryScores || null} />
 
       <Feedback 
         feedback={feedback} 
