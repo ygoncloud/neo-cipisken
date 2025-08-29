@@ -257,6 +257,11 @@ p {
   font-size: 1rem;
 }
 
+.color-dropdown option {
+  background-color: white;
+  color: black;
+}
+
 .color-preview-circle {
   display: inline-block;
   width: 16px;
