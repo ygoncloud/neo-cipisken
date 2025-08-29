@@ -10,6 +10,8 @@ interface CustomizerProps {
   headingFontWeight: number;
   baseFontWeight: number;
   onStyleChange: (styleName: string, value: any) => void;
+  onReset: () => void;
+  onSave: () => void;
 }
 
 const neobrutalismColors = [
@@ -45,7 +47,9 @@ const Customizer: React.FC<CustomizerProps> = ({
   boxShadowVertical,
   headingFontWeight,
   baseFontWeight,
-  onStyleChange 
+  onStyleChange,
+  onReset,
+  onSave
 }) => {
   if (!isOpen) {
     return null;
@@ -128,6 +132,20 @@ const Customizer: React.FC<CustomizerProps> = ({
             onChange={(e) => onStyleChange('baseFontWeight', parseInt(e.target.value))}
           />
         </div>
+        <div className="customizer-buttons">
+            <button
+              className="customize-button"
+              onClick={onReset}
+            >
+              Reset
+            </button>
+            <button
+              className="customize-button"
+              onClick={onSave}
+            >
+              Save
+            </button>
+          </div>
       </div>
     </div>
   );

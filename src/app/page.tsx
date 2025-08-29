@@ -44,6 +44,13 @@ export default function Home() {
   });
 
   useEffect(() => {
+    const savedStyles = localStorage.getItem('customStyles');
+    if (savedStyles) {
+      setCustomStyles(JSON.parse(savedStyles));
+    }
+  }, []);
+
+  useEffect(() => {
     const newBackgroundColor = backgroundColorMap[customStyles.primaryColor] || 'oklch(94.79% 0.0407 320.6)'; // Default color
     document.body.style.backgroundColor = newBackgroundColor;
   }, [customStyles.primaryColor]);
@@ -143,6 +150,10 @@ export default function Home() {
 
   const handleResetStyles = () => {
     setCustomStyles(DEFAULT_STYLES);
+  };
+
+  const handleSaveStyles = () => {
+    localStorage.setItem('customStyles', JSON.stringify(customStyles));
   };
 
   const appStyle = {
@@ -252,14 +263,6 @@ export default function Home() {
           className="customizer-image"
           onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
         />
-        {isCustomizerOpen && (
-          <button
-            className="customize-button"
-            onClick={handleResetStyles}
-          >
-            Reset
-          </button>
-        )}
       </div>
 
       <Customizer
@@ -272,6 +275,8 @@ export default function Home() {
         headingFontWeight={customStyles.headingFontWeight}
         baseFontWeight={customStyles.baseFontWeight}
         onStyleChange={handleStyleChange}
+        onReset={handleResetStyles}
+        onSave={handleSaveStyles}
       />
     </div>
   );
