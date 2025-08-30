@@ -458,3 +458,31 @@ code {
   opacity: 0;
   transform: translateY(-20px);
 }
+.header-buttons {
+  display: flex;
+  margin-left: auto;
+  gap: 1rem;
+}
+
+.header-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 3px 3px 0px black;
+  transition: all 0.15s ease-out;
+}
+
+.header-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px black;
+}
+
+.header-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px black;
+}
