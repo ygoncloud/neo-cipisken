@@ -148,6 +148,11 @@ p {
   z-index: 1001;
 }
 
+.customizer-buttons {
+  display: flex;
+  gap: 10px;
+}
+
 .customize-button {
   background-color: var(--primary-color);
   color: white;
