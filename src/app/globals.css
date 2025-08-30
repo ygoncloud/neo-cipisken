@@ -145,25 +145,7 @@ p {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   z-index: 1001;
-  gap: 10px;
-}
-
-.customizer-buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.customizer-image {
-  cursor: pointer;
-  margin-bottom: 10px;
-  border-radius: var(--border-radius);
-  border: 3px solid black;
-  box-shadow: 4px 4px 0px black;
 }
 
 .customize-button {

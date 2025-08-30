@@ -283,14 +283,9 @@ export default function Home() {
       />
 
       <div className="customizer-container">
-        <Image
-          src={isCustomizerOpen ? "/reset-button.jpeg" : "/customizer-button.jpeg"}
-          alt="Customizer"
-          width={100}
-          height={100}
-          className="customizer-image"
-          onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}
-        />
+        <button className="button" onClick={() => setIsCustomizerOpen(!isCustomizerOpen)}>
+          {isCustomizerOpen ? 'Close' : 'Customize'}
+        </button>
       </div>
 
       <Customizer
