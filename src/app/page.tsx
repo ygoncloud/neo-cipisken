@@ -11,6 +11,7 @@ import Score from '../components/home/Score';
 import Feedback from '../components/home/Feedback';
 import { backgroundColorMap } from '../lib/colors';
 import { Toaster, toast } from 'react-hot-toast';
+import NeobrutalismToast from '../components/NeobrutalismToast';
 
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -32,7 +33,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
-  const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
     primaryColor: 'oklch(72.27% 0.1894 50.19)', // Orange
@@ -60,7 +60,9 @@ export default function Home() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       if (file.type !== 'application/pdf') {
-        toast.error('Invalid file type. Please upload a PDF file.');
+        toast.custom((t) => (
+          <NeobrutalismToast t={t} message="Invalid file type. Please upload a PDF file." type="error" />
+        ));
         setCvFile(null);
       } else {
         setCvFile(file);
@@ -71,7 +73,9 @@ export default function Home() {
 
   const handleAnalyzeClick = async () => {
     if (!cvFile) {
-      toast.error('Please upload a CV.');
+      toast.custom((t) => (
+        <NeobrutalismToast t={t} message="Please upload a CV." type="error" />
+      ));
       return;
     }
 
@@ -103,11 +107,15 @@ export default function Home() {
         ...data.feedback,
         categoryScores: data.categoryScores
       });
-      toast.success('Analysis complete!');
+      toast.custom((t) => (
+        <NeobrutalismToast t={t} message="Analysis complete!" type="success" />
+      ));
 
     } catch (error: any) {
       console.error('Error caught:', error);
-      toast.error(error.message || 'Error uploading file or getting feedback.');
+      toast.custom((t) => (
+        <NeobrutalismToast t={t} message={error.message || 'Error uploading file or getting feedback.'} type="error" />
+      ));
     }
     setLoading(false);
   };
@@ -118,16 +126,16 @@ export default function Home() {
     setFeedback(null);
     setScore(null);
     setError(null);
-    toast('Analysis cleared.');
+    toast.custom((t) => (
+      <NeobrutalismToast t={t} message="Analysis cleared." type="default" />
+    ));
   };
 
   const handleCopy = (text: string, sectionName: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      toast.success(`Copied ${sectionName} to clipboard!`);
-      setCopiedSection(sectionName);
-      setTimeout(() => {
-        setCopiedSection(null);
-      }, 2000);
+      toast.custom((t) => (
+        <NeobrutalismToast t={t} message={`Copied ${sectionName} to clipboard!`} type="success" />
+      ));
     });
   };
 
@@ -136,7 +144,9 @@ export default function Home() {
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
       const file = event.dataTransfer.files[0];
       if (file.type !== 'application/pdf') {
-        toast.error('Invalid file type. Please upload a PDF file.');
+        toast.custom((t) => (
+          <NeobrutalismToast t={t} message="Invalid file type. Please upload a PDF file." type="error" />
+        ));
         setCvFile(null);
       } else {
         setCvFile(file);
@@ -154,12 +164,16 @@ export default function Home() {
 
   const handleResetStyles = () => {
     setCustomStyles(DEFAULT_STYLES);
-    toast('Styles reset to default.');
+    toast.custom((t) => (
+      <NeobrutalismToast t={t} message="Styles reset to default." type="default" />
+    ));
   };
 
   const handleSaveStyles = () => {
     localStorage.setItem('customStyles', JSON.stringify(customStyles));
-    toast.success('Styles saved!');
+    toast.custom((t) => (
+      <NeobrutalismToast t={t} message="Styles saved!" type="success" />
+    ));
   };
 
   const appStyle = {
@@ -257,7 +271,6 @@ export default function Home() {
 
       <Feedback 
         feedback={feedback} 
-        copiedSection={copiedSection} 
         handleCopy={handleCopy} 
       />
 

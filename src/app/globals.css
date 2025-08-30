@@ -444,3 +444,17 @@ code {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.neobrutalism-toast {
+  transition: all 0.3s ease-in-out;
+}
+
+.animate-enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-leave {
+  opacity: 0;
+  transform: translateY(-20px);
+}
