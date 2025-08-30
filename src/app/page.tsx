@@ -10,6 +10,7 @@ import ActionButtons from '../components/home/ActionButtons';
 import Score from '../components/home/Score';
 import Feedback from '../components/home/Feedback';
 import { backgroundColorMap } from '../lib/colors';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -59,7 +60,7 @@ export default function Home() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       if (file.type !== 'application/pdf') {
-        setError('Invalid file type. Please upload a PDF file.');
+        toast.error('Invalid file type. Please upload a PDF file.');
         setCvFile(null);
       } else {
         setCvFile(file);
@@ -70,7 +71,7 @@ export default function Home() {
 
   const handleAnalyzeClick = async () => {
     if (!cvFile) {
-      alert('Please upload a CV.');
+      toast.error('Please upload a CV.');
       return;
     }
 
@@ -102,10 +103,11 @@ export default function Home() {
         ...data.feedback,
         categoryScores: data.categoryScores
       });
+      toast.success('Analysis complete!');
 
     } catch (error: any) {
       console.error('Error caught:', error);
-      setError(error.message || 'Error uploading file or getting feedback.');
+      toast.error(error.message || 'Error uploading file or getting feedback.');
     }
     setLoading(false);
   };
@@ -116,10 +118,12 @@ export default function Home() {
     setFeedback(null);
     setScore(null);
     setError(null);
+    toast('Analysis cleared.');
   };
 
   const handleCopy = (text: string, sectionName: string) => {
     navigator.clipboard.writeText(text).then(() => {
+      toast.success(`Copied ${sectionName} to clipboard!`);
       setCopiedSection(sectionName);
       setTimeout(() => {
         setCopiedSection(null);
@@ -132,7 +136,7 @@ export default function Home() {
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
       const file = event.dataTransfer.files[0];
       if (file.type !== 'application/pdf') {
-        setError('Invalid file type. Please upload a PDF file.');
+        toast.error('Invalid file type. Please upload a PDF file.');
         setCvFile(null);
       } else {
         setCvFile(file);
@@ -150,10 +154,12 @@ export default function Home() {
 
   const handleResetStyles = () => {
     setCustomStyles(DEFAULT_STYLES);
+    toast('Styles reset to default.');
   };
 
   const handleSaveStyles = () => {
     localStorage.setItem('customStyles', JSON.stringify(customStyles));
+    toast.success('Styles saved!');
   };
 
   const appStyle = {
@@ -194,6 +200,7 @@ export default function Home() {
 
   return (
     <div className="App" style={appStyle}>
+      <Toaster />
       <header className="main-header">
         <div className="website-logo-container">
           <Image

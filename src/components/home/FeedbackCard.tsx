@@ -8,11 +8,10 @@ interface FeedbackCardProps {
   title: string;
   content: string | null;
   sectionName: string;
-  copiedSection: string | null;
   handleCopy: (text: string, sectionName: string) => void;
 }
 
-const FeedbackCard: React.FC<FeedbackCardProps> = ({ title, content, sectionName, copiedSection, handleCopy }) => {
+const FeedbackCard: React.FC<FeedbackCardProps> = ({ title, content, sectionName, handleCopy }) => {
   if (!content) {
     return null;
   }
@@ -24,7 +23,7 @@ const FeedbackCard: React.FC<FeedbackCardProps> = ({ title, content, sectionName
       <div className="feedback-card-header">
         <h3>{title}</h3>
         <button className="copy-button" onClick={() => handleCopy(content ?? '', sectionName)}>
-          {copiedSection === sectionName ? 'Copied!' : 'Copy'}
+          Copy
         </button>
       </div>
       <ReactMarkdown>{sanitizedContent}</ReactMarkdown>
