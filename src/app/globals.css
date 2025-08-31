@@ -462,6 +462,7 @@ code {
   background-color: white;
   box-shadow: 3px 3px 0px black;
   transition: all 0.15s ease-out;
+  color: var(--primary-color);
 }
 
 .header-button:hover {
