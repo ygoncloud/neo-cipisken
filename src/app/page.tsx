@@ -96,6 +96,10 @@ export default function Home() {
         body: formData,
       });
 
+      if (response.status === 413) {
+        throw new Error("File size exceeds the server's limit. Please upload a smaller file.");
+      }
+
       const data = await response.json();
 
       if (!response.ok) {
@@ -113,9 +117,15 @@ export default function Home() {
 
     } catch (error: any) {
       console.error('Error caught:', error);
-      toast.custom((t) => (
-        <NeobrutalismToast t={t} message={error.message || 'Error uploading file or getting feedback.'} type="error" />
-      ));
+      if (error instanceof SyntaxError) {
+          toast.custom((t) => (
+              <NeobrutalismToast t={t} message="The server returned an unexpected response. Please try again." type="error" />
+          ));
+      } else {
+          toast.custom((t) => (
+              <NeobrutalismToast t={t} message={error.message || 'Error uploading file or getting feedback.'} type="error" />
+          ));
+      }
     }
     setLoading(false);
   };
