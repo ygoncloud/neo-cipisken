@@ -12,6 +12,7 @@ import Feedback from '../components/home/Feedback';
 import { backgroundColorMap } from '../lib/colors';
 import { Toaster, toast } from 'react-hot-toast';
 import NeobrutalismToast from '../components/NeobrutalismToast';
+import VideoModal from '../components/home/VideoModal';
 
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -33,6 +34,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [customStyles, setCustomStyles] = useState({
     primaryColor: 'oklch(72.27% 0.1894 50.19)', // Orange
@@ -250,7 +252,7 @@ export default function Home() {
           className="card-corner-image"
         >
           {carouselImages.length > 0 && (
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">
+            <div onClick={() => setIsVideoModalOpen(true)}>
               <Image
                 src={carouselImages[currentImageIndex]}
                 alt="Decorative image"
@@ -259,7 +261,7 @@ export default function Home() {
                 className="anya-image"
                 priority={currentImageIndex === 0}
               />
-            </a>
+            </div>
           )}
         </div>
         
@@ -313,6 +315,13 @@ export default function Home() {
         onReset={handleResetStyles}
         onSave={handleSaveStyles}
       />
+
+      {isVideoModalOpen && (
+        <VideoModal
+          videoUrl="/RA.mp4"
+          onClose={() => setIsVideoModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
