@@ -14,6 +14,8 @@ import { Toaster, toast } from 'react-hot-toast';
 import NeobrutalismToast from '../components/NeobrutalismToast';
 import VideoModal from '../components/home/VideoModal';
 
+import { logger } from '../lib/logger';
+
 export default function Home() {
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState('');
@@ -47,6 +49,10 @@ export default function Home() {
   });
 
   useEffect(() => {
+    logger.info('Home page mounted');
+  }, []);
+
+  useEffect(() => {
     const savedStyles = localStorage.getItem('customStyles');
     if (savedStyles) {
       setCustomStyles(JSON.parse(savedStyles));
@@ -78,6 +84,7 @@ export default function Home() {
       toast.custom((t) => (
         <NeobrutalismToast t={t} message="Please upload a CV." type="error" />
       ));
+      logger.warn('Attempted to analyze without a CV file');
       return;
     }
 
@@ -99,12 +106,15 @@ export default function Home() {
       });
 
       if (response.status === 413) {
-        throw new Error("File size exceeds the server's limit. Please upload a smaller file.");
+        const errorMessage = "File size exceeds the server's limit. Please upload a smaller file.";
+        logger.error(errorMessage, { fileSize: cvFile.size });
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
 
       if (!response.ok) {
+        logger.error(`API response not OK: ${data.error || 'An unknown error occurred.'}`, { status: response.status, data });
         throw new Error(data.error || 'An unknown error occurred.');
       }
 
@@ -116,9 +126,11 @@ export default function Home() {
       toast.custom((t) => (
         <NeobrutalismToast t={t} message="Analysis complete!" type="success" />
       ));
+      logger.info('Analysis complete', { score: data.score });
 
     } catch (error: any) {
       console.error('Error caught:', error);
+      logger.error('Error during analysis', { error: error.message });
       if (error instanceof SyntaxError) {
           toast.custom((t) => (
               <NeobrutalismToast t={t} message="The server returned an unexpected response. Please try again." type="error" />
